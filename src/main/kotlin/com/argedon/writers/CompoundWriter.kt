@@ -14,10 +14,8 @@ class CompoundWriter(
 ) : NBTWriter(parent.nbtConfiguration) {
     private val compound = MutableNBTCompound()
 
-    override fun getNBT(): NBT = compound.toCompound()
-
     override fun endStructure(descriptor: SerialDescriptor) {
-        parent.setNBT(rootName, getNBT())
+        parent.setNBT(rootName, compound.toCompound())
     }
 
     @OptIn(ExperimentalSerializationApi::class)
@@ -26,7 +24,7 @@ class CompoundWriter(
         return true
     }
 
-    override fun setNBT(key: String, nbt: NBT) {
+    override fun setNBT(nbt: NBT) {
         compound[key] = nbt
     }
 }

@@ -14,10 +14,8 @@ class MapWriter(
     private val compound = MutableNBTCompound()
     private var state = MapState.KEY
 
-    override fun getNBT(): NBT = compound.toCompound()
-
     override fun endStructure(descriptor: SerialDescriptor) {
-        parent.setNBT(rootName, getNBT())
+        parent.setNBT(rootName, compound.toCompound())
     }
 
     override fun encodeElement(descriptor: SerialDescriptor, index: Int): Boolean {
@@ -25,10 +23,10 @@ class MapWriter(
         return true
     }
 
-    override fun setNBT(key: String, nbt: NBT) {
+    override fun setNBT(nbt: NBT) {
         when (state) {
-            MapState.KEY -> this.key = nbt.value.toString()
-            MapState.VALUE -> compound[this.key] = nbt
+            MapState.KEY -> key = nbt.toString()
+            MapState.VALUE -> compound[key] = nbt
         }
     }
 }

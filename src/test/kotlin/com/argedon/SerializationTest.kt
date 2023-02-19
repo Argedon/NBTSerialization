@@ -38,6 +38,15 @@ class SerializationTest {
     }
 
     @Test
+    fun listObjTest() {
+        val toSerialize = listOf(Fourth(4.0), Fourth(4.0))
+        val expected = NBTList(NBTType.TAG_Compound, listOf(NBT.Kompound { setDouble("double", 4.0) }, NBT.Kompound { setDouble("double", 4.0) }))
+        val serialized = nbt.serialize(toSerialize)
+
+        assertEquals(expected, serialized)
+    }
+
+    @Test
     fun arrayTest() {
         val toSerialize = arrayOf(Float.MIN_VALUE, 1F, 20F, 50F, Float.MAX_VALUE)
         val expected = NBTList(NBTType.TAG_Float, listOf(NBTFloat(Float.MIN_VALUE), NBTFloat(1F), NBTFloat(20F), NBTFloat(50F), NBTFloat(Float.MAX_VALUE)))

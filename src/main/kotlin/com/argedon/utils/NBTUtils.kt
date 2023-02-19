@@ -3,11 +3,12 @@ package com.argedon.utils
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.descriptors.PrimitiveKind
 import kotlinx.serialization.descriptors.SerialKind
-import org.jglrxavpok.hephaistos.nbt.NBT
 import org.jglrxavpok.hephaistos.nbt.NBTList
 import org.jglrxavpok.hephaistos.nbt.NBTType
 
 object NBTUtils {
+    val EMPTY_LIST = NBTList(NBTType.TAG_End)
+
     @OptIn(ExperimentalSerializationApi::class)
     fun getNBTType(kind: SerialKind): NBTType<*> = when (kind) {
         PrimitiveKind.STRING, PrimitiveKind.CHAR -> NBTType.TAG_String
@@ -20,6 +21,3 @@ object NBTUtils {
         else -> NBTType.TAG_Compound
     }
 }
-
-val NBT.Companion.EMPTY_LIST: NBTList<*>
-    get() = NBTList(NBTType.TAG_End)

@@ -33,6 +33,15 @@ class DeserializationTest {
     }
 
     @Test
+    fun listObjTest() {
+        val toSerialize = listOf(Fourth(4.0), Fourth(4.0))
+        val serialized = nbt.serialize(toSerialize)
+
+        assertEquals(toSerialize, nbt.deserialize(serialized))
+    }
+
+
+    @Test
     fun arrayTest() {
         val toSerialize = arrayOf(Float.MIN_VALUE, 1F, 20F, 50F, Float.MAX_VALUE)
         val serialized = nbt.serialize(toSerialize)

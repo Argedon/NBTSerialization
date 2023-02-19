@@ -23,7 +23,7 @@ class ListReader(private val nbt: NBTList<*>, override val serializersModule: Se
     override fun decodeShort(): Short = nextValue() as? Short ?: 0
     override fun decodeBoolean(): Boolean = nextValue() as? Boolean ?: false
     override fun decodeString(): String = nextValue() as? String ?: ""
-    override fun decodeChar(): Char = nextValue() as? Char ?: ' '
+    override fun decodeChar(): Char = (nextValue() as? String)?.get(0) ?: ' '
     override fun decodeValue(): Any = nextValue()
     override fun decodeCollectionSize(descriptor: SerialDescriptor): Int = size
     override fun decodeSequentially(): Boolean = size > 0

@@ -11,7 +11,7 @@ import org.jglrxavpok.hephaistos.nbt.*
 import com.argedon.readers.CompoundReader
 import com.argedon.readers.ListReader
 import com.argedon.readers.MapReader
-import com.argedon.utils.EMPTY_LIST
+import com.argedon.utils.NBTUtils
 
 class NBTDecoder(
     override val serializersModule: SerializersModule,
@@ -35,7 +35,7 @@ class NBTDecoder(
 abstract class NBTReader : AbstractDecoder() {
     fun beginStructure(descriptor: SerialDescriptor, nbt: NBT?): CompositeDecoder = when (descriptor.kind) {
         StructureKind.CLASS, PolymorphicKind.OPEN, PolymorphicKind.SEALED -> CompoundReader(nbt as? NBTCompound ?: NBT.EMPTY, serializersModule)
-        StructureKind.LIST -> ListReader(nbt as? NBTList<*> ?: NBT.EMPTY_LIST, serializersModule)
+        StructureKind.LIST -> ListReader(nbt as? NBTList<*> ?: NBTUtils.EMPTY_LIST, serializersModule)
         StructureKind.MAP -> MapReader(nbt as? NBTCompound ?: NBT.EMPTY, serializersModule)
         else -> throw RuntimeException("Error: beginStructure ${descriptor.kind} $nbt")
     }

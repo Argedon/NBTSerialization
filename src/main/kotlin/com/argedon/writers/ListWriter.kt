@@ -15,13 +15,11 @@ class ListWriter(
 ) : NBTWriter(parent.nbtConfiguration) {
     private val list = arrayListOf<NBT>()
 
-    override fun getNBT(): NBT = NBTList(nbtType, list)
-
     override fun endStructure(descriptor: SerialDescriptor) {
-        parent.setNBT(rootName, getNBT())
+        parent.setNBT(rootName, NBTList(nbtType, list))
     }
 
-    override fun setNBT(key: String, nbt: NBT) {
+    override fun setNBT(nbt: NBT) {
         list.add(nbt)
     }
 }

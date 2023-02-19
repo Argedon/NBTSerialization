@@ -19,11 +19,11 @@ class NBTEncoder(
     private var nbt: NBT? = null
     private var rootCompound = MutableNBTCompound()
 
-    override fun getNBT(): NBT {
+    fun getNBT(): NBT {
         return nbt ?: rootCompound.toCompound()
     }
 
-    override fun setNBT(key: String, nbt: NBT) {
+    override fun setNBT(nbt: NBT) {
         if (key.isNotEmpty()) {
             rootCompound[key] = nbt
         } else {
@@ -38,8 +38,12 @@ abstract class NBTWriter(
 ) : AbstractEncoder() {
     protected var key = ""
 
-    abstract fun getNBT(): NBT
-    abstract fun setNBT(key: String, nbt: NBT)
+    abstract fun setNBT(nbt: NBT)
+
+    fun setNBT(key: String, nbt: NBT) {
+        this.key = key
+        this.setNBT(nbt)
+    }
 
     @OptIn(ExperimentalSerializationApi::class)
     override fun beginStructure(descriptor: SerialDescriptor): CompositeEncoder {
@@ -52,15 +56,15 @@ abstract class NBTWriter(
     }
 
     override fun shouldEncodeElementDefault(descriptor: SerialDescriptor, index: Int): Boolean = nbtConfiguration.encodeDefaults
-    override fun encodeEnum(enumDescriptor: SerialDescriptor, index: Int) = setNBT(key, NBTString(enumDescriptor.getElementName(index)))
-    override fun encodeByte(value: Byte) = setNBT(key, NBTByte(value))
-    override fun encodeShort(value: Short) = setNBT(key, NBTShort(value))
-    override fun encodeInt(value: Int) = setNBT(key, NBTInt(value))
-    override fun encodeLong(value: Long) = setNBT(key, NBTLong(value))
-    override fun encodeFloat(value: Float) = setNBT(key, NBTFloat(value))
-    override fun encodeDouble(value: Double) = setNBT(key, NBTDouble(value))
-    override fun encodeChar(value: Char) = setNBT(key, NBTString(value.toString()))
-    override fun encodeString(value: String) = setNBT(key, NBTString(value))
-    override fun encodeBoolean(value: Boolean) = setNBT(key, if (value) NBT.TRUE else NBT.FALSE)
+    override fun encodeEnum(enumDescriptor: SerialDescriptor, index: Int) = setNBT(NBTString(enumDescriptor.getElementName(index)))
+    override fun encodeByte(value: Byte) = setNBT(NBTByte(value))
+    override fun encodeShort(value: Short) = setNBT(NBTShort(value))
+    override fun encodeInt(value: Int) = setNBT(NBTInt(value))
+    override fun encodeLong(value: Long) = setNBT(NBTLong(value))
+    override fun encodeFloat(value: Float) = setNBT(NBTFloat(value))
+    override fun encodeDouble(value: Double) = setNBT(NBTDouble(value))
+    override fun encodeChar(value: Char) = setNBT(NBTString(value.toString()))
+    override fun encodeString(value: String) = setNBT(NBTString(value))
+    override fun encodeBoolean(value: Boolean) = setNBT(if (value) NBT.TRUE else NBT.FALSE)
     override fun encodeNull() {}
 }

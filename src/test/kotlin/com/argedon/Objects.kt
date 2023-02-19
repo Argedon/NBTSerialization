@@ -34,4 +34,4 @@ data class ComplexPolymorphism(val one: Container?, val two: ObjContainer?, val 
 
 // benchmark
 @Serializable
-data class BenchmarkTestObj(val s: Map<Int, Map<Int, List<Map<Int, Int>>>>, val t: Int?, val h: String?)
+data class BenchmarkTestObj(val s: Map<Int, Map<Int, List<Map<Int, Int>>>>, val t: Int?, val h: String?, val b: Container, val c: ObjContainer)

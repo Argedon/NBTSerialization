@@ -20,7 +20,7 @@ class MapReader(nbt: NBTCompound, override val serializersModule: SerializersMod
 
     init {
         if (keys.size != values.size) {
-            throw RuntimeException("Size of map is not the same for keys and values!")
+            throw RuntimeException("Keys size and Values size are not the same!")
         }
     }
 

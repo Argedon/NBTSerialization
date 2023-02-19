@@ -1,5 +1,8 @@
 package com.argedon
 
+import kotlinx.serialization.modules.SerializersModule
+import kotlinx.serialization.modules.polymorphic
+import kotlinx.serialization.modules.subclass
 import org.openjdk.jmh.annotations.*
 import java.util.concurrent.TimeUnit
 
@@ -27,8 +30,14 @@ open class SerializationBenchmark {
                 mapOf(50 to 10), mapOf(60 to 70)
             )
         )
-    ), 50, null)
-    private val nbt = Nbt {  }
+    ), 50, null, ContainerImpl(20), ObjContainerImpl(10))
+    private val nbt = Nbt {
+        serializationModule = SerializersModule {
+            polymorphic(ObjContainer::class) {
+                subclass(ObjContainerImpl::class)
+            }
+        }
+    }
     private val serialized = nbt.serialize(toSerialize)
 
     @Param("1", "10", "100", "1000")
