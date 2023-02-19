@@ -11,9 +11,8 @@ data class Nbt(
     val nbtConfiguration: NbtConfiguration,
     val serializationModule: SerializersModule
 ) {
-    private val encoder = NBTEncoder(serializationModule, nbtConfiguration)
-
     fun <T> serialize(serializer: SerializationStrategy<T>, obj: T): NBT {
+        val encoder = NBTEncoder(serializationModule, nbtConfiguration)
         serializer.serialize(encoder, obj)
         return encoder.getNBT()
     }
