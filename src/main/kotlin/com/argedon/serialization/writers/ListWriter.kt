@@ -1,11 +1,11 @@
-package com.argedon.writers
+package com.argedon.serialization.writers
 
 import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.modules.SerializersModule
 import org.jglrxavpok.hephaistos.nbt.NBT
 import org.jglrxavpok.hephaistos.nbt.NBTList
 import org.jglrxavpok.hephaistos.nbt.NBTType
-import com.argedon.NBTWriter
+import com.argedon.serialization.NBTWriter
 
 class ListWriter(
     private val rootName: String,

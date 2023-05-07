@@ -1,16 +1,15 @@
-package com.argedon
+package com.argedon.serialization
 
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.descriptors.*
 import kotlinx.serialization.encoding.AbstractEncoder
-import kotlinx.serialization.encoding.CompositeEncoder
 import kotlinx.serialization.modules.SerializersModule
 import org.jglrxavpok.hephaistos.nbt.*
 import org.jglrxavpok.hephaistos.nbt.mutable.MutableNBTCompound
-import com.argedon.utils.NBTUtils
-import com.argedon.writers.CompoundWriter
-import com.argedon.writers.ListWriter
-import com.argedon.writers.MapWriter
+import com.argedon.serialization.utils.NBTUtils
+import com.argedon.serialization.writers.CompoundWriter
+import com.argedon.serialization.writers.ListWriter
+import com.argedon.serialization.writers.MapWriter
 
 class NBTEncoder(
     override val serializersModule: SerializersModule,
@@ -46,13 +45,11 @@ abstract class NBTWriter(
     }
 
     @OptIn(ExperimentalSerializationApi::class)
-    override fun beginStructure(descriptor: SerialDescriptor): CompositeEncoder {
-        return when (descriptor.kind) {
-            StructureKind.CLASS, PolymorphicKind.OPEN, PolymorphicKind.SEALED -> CompoundWriter(key, this, serializersModule)
-            StructureKind.MAP -> MapWriter(key, this, serializersModule)
-            StructureKind.LIST -> ListWriter(key, this, NBTUtils.getNBTType(descriptor.getElementDescriptor(0).kind), serializersModule)
-            else -> super.beginStructure(descriptor)
-        }
+    override fun beginStructure(descriptor: SerialDescriptor) = when (descriptor.kind) {
+        StructureKind.CLASS, PolymorphicKind.OPEN, PolymorphicKind.SEALED -> CompoundWriter(key, this, serializersModule)
+        StructureKind.MAP -> MapWriter(key, this, serializersModule)
+        StructureKind.LIST -> ListWriter(key, this, NBTUtils.getNBTType(descriptor.getElementDescriptor(0).kind), serializersModule)
+        else -> super.beginStructure(descriptor)
     }
 
     override fun shouldEncodeElementDefault(descriptor: SerialDescriptor, index: Int): Boolean = nbtConfiguration.encodeDefaults

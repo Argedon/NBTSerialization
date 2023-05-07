@@ -1,4 +1,4 @@
-package com.argedon
+package com.argedon.serialization
 
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.descriptors.PolymorphicKind
@@ -8,10 +8,9 @@ import kotlinx.serialization.encoding.AbstractDecoder
 import kotlinx.serialization.encoding.CompositeDecoder
 import kotlinx.serialization.modules.SerializersModule
 import org.jglrxavpok.hephaistos.nbt.*
-import com.argedon.readers.CompoundReader
-import com.argedon.readers.ListReader
-import com.argedon.readers.MapReader
-import com.argedon.utils.NBTUtils
+import com.argedon.serialization.readers.CompoundReader
+import com.argedon.serialization.readers.ListReader
+import com.argedon.serialization.readers.MapReader
 
 class NBTDecoder(
     override val serializersModule: SerializersModule,
@@ -34,9 +33,9 @@ class NBTDecoder(
 @OptIn(ExperimentalSerializationApi::class)
 abstract class NBTReader : AbstractDecoder() {
     fun beginStructure(descriptor: SerialDescriptor, nbt: NBT?): CompositeDecoder = when (descriptor.kind) {
-        StructureKind.CLASS, PolymorphicKind.OPEN, PolymorphicKind.SEALED -> CompoundReader(nbt as? NBTCompound ?: NBT.EMPTY, serializersModule)
-        StructureKind.LIST -> ListReader(nbt as? NBTList<*> ?: NBTUtils.EMPTY_LIST, serializersModule)
-        StructureKind.MAP -> MapReader(nbt as? NBTCompound ?: NBT.EMPTY, serializersModule)
+        StructureKind.CLASS, PolymorphicKind.OPEN, PolymorphicKind.SEALED -> CompoundReader(nbt as NBTCompound, serializersModule)
+        StructureKind.LIST -> ListReader(nbt as NBTList<*>, serializersModule)
+        StructureKind.MAP -> MapReader(nbt as NBTCompound, serializersModule)
         else -> throw RuntimeException("Error: beginStructure ${descriptor.kind} $nbt")
     }
 }

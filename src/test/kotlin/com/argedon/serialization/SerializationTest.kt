@@ -1,4 +1,4 @@
-package com.argedon
+package com.argedon.serialization
 
 import kotlinx.serialization.modules.SerializersModule
 import kotlinx.serialization.modules.polymorphic
@@ -79,7 +79,7 @@ class SerializationTest {
     fun polymorphismSealedTest() {
         val toSerialize: Container = ContainerImpl(10)
         val expected = NBT.Kompound {
-            setString("type", "com.argedon.ContainerImpl")
+            setString("type", "com.argedon.serialization.ContainerImpl")
             set("value", NBT.Kompound {
                 setInt("int", 10)
             })
@@ -93,7 +93,7 @@ class SerializationTest {
     fun polymorphismObjTest() {
         val toSerialize: ObjContainer = ObjContainerImpl(10)
         val expected = NBT.Kompound {
-            setString("type", "com.argedon.ObjContainerImpl")
+            setString("type", "com.argedon.serialization.ObjContainerImpl")
             set("value", NBT.Kompound {
                 setInt("int", 10)
             })

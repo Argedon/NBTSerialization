@@ -1,4 +1,4 @@
-package com.argedon
+package com.argedon.serialization
 
 import kotlinx.serialization.DeserializationStrategy
 import kotlinx.serialization.SerializationStrategy

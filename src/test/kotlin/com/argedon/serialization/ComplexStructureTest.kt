@@ -1,4 +1,4 @@
-package com.argedon
+package com.argedon.serialization
 
 import kotlinx.serialization.modules.SerializersModule
 import kotlinx.serialization.modules.polymorphic
@@ -45,9 +45,11 @@ class ComplexStructureTest {
     fun second() {
         val toSerialize = ComplexPolymorphism(
             ContainerImpl(50), ObjContainerImpl(20),
-            ComplexPolymorphism(ContainerImpl(25), null,
+            ComplexPolymorphism(
+                ContainerImpl(25), null,
             ComplexPolymorphism(null, ObjContainerImpl(50), null)
-            ))
+            )
+        )
         val serialized = nbt.serialize(toSerialize)
 
         assertEquals(toSerialize, nbt.deserialize(serialized))
@@ -58,24 +60,32 @@ class ComplexStructureTest {
         val toSerialize = arrayOf(
             ComplexPolymorphism(
                 ContainerImpl(50), ObjContainerImpl(20),
-                ComplexPolymorphism(ContainerImpl(25), null,
+                ComplexPolymorphism(
+                    ContainerImpl(25), null,
                     ComplexPolymorphism(ContainerImpl(50), ObjContainerImpl(50), null)
-                )),
+                )
+            ),
             ComplexPolymorphism(
                 ContainerImpl(123), ObjContainerImpl(32627),
-                ComplexPolymorphism(ContainerImpl(532), null,
+                ComplexPolymorphism(
+                    ContainerImpl(532), null,
                     ComplexPolymorphism(null, ObjContainerImpl(327237), null)
-                )),
+                )
+            ),
             ComplexPolymorphism(
                 ContainerImpl(37237), ObjContainerImpl(2723),
-                ComplexPolymorphism(ContainerImpl(23723), null,
+                ComplexPolymorphism(
+                    ContainerImpl(23723), null,
                     ComplexPolymorphism(ContainerImpl(123), ObjContainerImpl(236236), null)
-                )),
+                )
+            ),
             ComplexPolymorphism(
                 ContainerImpl(6236), ObjContainerImpl(236236),
-                ComplexPolymorphism(ContainerImpl(326236), null,
+                ComplexPolymorphism(
+                    ContainerImpl(326236), null,
                     ComplexPolymorphism(null, ObjContainerImpl(62362), null)
-                ))
+                )
+            )
         )
         val serialized = nbt.serialize(toSerialize)
 

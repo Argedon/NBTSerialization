@@ -1,4 +1,4 @@
-package com.argedon
+package com.argedon.serialization
 
 import kotlinx.serialization.modules.SerializersModule
 import kotlinx.serialization.modules.polymorphic
@@ -31,6 +31,7 @@ open class SerializationBenchmark {
             )
         )
     ), 50, null, ContainerImpl(20), ObjContainerImpl(10))
+
     private val nbt = Nbt {
         serializationModule = SerializersModule {
             polymorphic(ObjContainer::class) {

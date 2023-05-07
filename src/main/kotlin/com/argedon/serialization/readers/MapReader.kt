@@ -1,11 +1,11 @@
-package com.argedon.readers
+package com.argedon.serialization.readers
 
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.CompositeDecoder
 import kotlinx.serialization.modules.SerializersModule
 import org.jglrxavpok.hephaistos.nbt.*
-import com.argedon.NBTReader
+import com.argedon.serialization.NBTReader
 
 @ExperimentalSerializationApi
 class MapReader(nbt: NBTCompound, override val serializersModule: SerializersModule) : NBTReader() {
